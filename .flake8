@@ -1,5 +1,5 @@
 [flake8]
-max-line-length = 80
-ignore = W503, ANN201
+max-line-length = 85
+ignore = E501, W503, ANN201
 exclude = __init__.py
 docstring-convention = google
