@@ -21,7 +21,7 @@ async def root():
     return "Hello World"
 
 
-@app.get("/expenses/")
+@app.get("/expenses/", response_model=list[schemas.Expense])
 async def read_expenses():
     return expenses
 
