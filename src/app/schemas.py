@@ -1,13 +1,20 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from pydantic import BaseModel
 
 
-class Expense(BaseModel):
-    id: UUID
+class ExpenseBase(BaseModel):
     cost: float
-    time_created: datetime
     description: Optional[str] = None
     category: str = "Misc"
+
+
+class ExpenseCreate(ExpenseBase):
+    pass
+
+
+class Expense(ExpenseBase):
+    id: UUID = uuid4()
+    time_created: datetime = datetime.now(tz=timezone.utc)
