@@ -4,6 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
+
 class Expense(BaseModel):
     id: UUID
     cost: float
