@@ -26,7 +26,7 @@ async def read_expenses():
     return expenses
 
 
-@app.get("/expenses/{expense_id}", response_model=schemas.Expense)
+@app.get("/expenses/{expense_id}/", response_model=schemas.Expense)
 async def read_expense(expense_id):
     return expenses[expense_id]
 
