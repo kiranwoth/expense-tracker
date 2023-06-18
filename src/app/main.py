@@ -21,6 +21,11 @@ async def root():
     return "Hello World"
 
 
+@app.get("/expenses/")
+async def read_expenses():
+    return expenses
+
+
 @app.post("/expenses/", response_model=schemas.Expense)
 async def create_expense(expense: schemas.ExpenseCreate):
     new_expense = schemas.Expense(**expense.dict())
