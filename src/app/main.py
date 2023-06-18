@@ -26,7 +26,12 @@ async def read_expenses():
     return expenses
 
 
-@app.post("/expenses/", response_model=schemas.Expense)
+@app.get("/expenses/{expense_id}", response_model=schemas.Expense)
+async def read_expense(expense_id):
+    return expenses[expense_id]
+
+
+@app.post("/expenses/", response_model=schemas.Expesnse)
 async def create_expense(expense: schemas.ExpenseCreate):
     new_expense = schemas.Expense(**expense.dict())
     expenses[new_expense.id] = new_expense
