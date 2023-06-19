@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+from typing import Dict
+
+from fastapi import FastAPI, HTTPException
 
 from . import schemas
 
@@ -19,6 +21,18 @@ expenses = {
 @app.get("/")
 async def root():
     return "Hello World"
+
+
+@app.get("/expenses/", response_model=Dict[str, schemas.Expense])
+async def read_expenses():
+    return expenses
+
+
+@app.get("/expenses/{expense_id}/", response_model=schemas.Expense)
+async def read_expense(expense_id):
+    if expense_id not in expenses:
+        raise HTTPException(status_code=404, detail="Expense not found")
+    return expenses[expense_id]
 
 
 @app.post("/expenses/", response_model=schemas.Expense)
