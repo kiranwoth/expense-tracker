@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 from . import schemas
 
@@ -28,6 +28,8 @@ async def read_expenses():
 
 @app.get("/expenses/{expense_id}/", response_model=schemas.Expense)
 async def read_expense(expense_id):
+    if expense_id not in expenses:
+        raise HTTPException(status_code=404, detail="Expense not found")
     return expenses[expense_id]
 
 
