@@ -23,7 +23,7 @@ async def root():
     return "Hello World"
 
 
-@app.get("/expenses/", response_model=dict)
+@app.get("/expenses/", response_model=Dict[str, schemas.Expense])
 async def read_expenses():
     return expenses
 
