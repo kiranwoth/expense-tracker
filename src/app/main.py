@@ -1,3 +1,5 @@
+from typing import Dict
+
 from fastapi import FastAPI, HTTPException
 
 from . import schemas
