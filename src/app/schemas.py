@@ -15,6 +15,12 @@ class ExpenseCreate(ExpenseBase):
     pass
 
 
+class ExpenseUpdate(BaseModel):
+    cost: Optional[float] = None
+    description: Optional[str] = None
+    category: Optional[str] = None
+
+
 class Expense(ExpenseBase):
     id: UUID = uuid4()
     time_created: datetime = datetime.now(tz=timezone.utc)

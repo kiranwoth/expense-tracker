@@ -29,7 +29,7 @@ async def read_expenses():
 
 
 @app.get("/expenses/{expense_id}/", response_model=schemas.Expense)
-async def read_expense(expense_id):
+async def read_expense(expense_id: str):
     if expense_id not in expenses:
         raise HTTPException(status_code=404, detail="Expense not found")
     return expenses[expense_id]
@@ -40,3 +40,17 @@ async def create_expense(expense: schemas.ExpenseCreate):
     new_expense = schemas.Expense(**expense.dict())
     expenses[new_expense.id] = new_expense
     return new_expense
+
+
+@app.patch("/expenses/{expense_id}", response_model=schemas.Expense)
+async def update_expense(expense_id: str, expense_partial: schemas.ExpenseUpdate):
+    # remove parts of expense that are None (not updated)
+    updated_expense = expense_partial.dict(exclude_unset=True)
+    if expense_id not in expenses:
+        raise HTTPException(status_code=404, detail="Expense not found")
+    expense = expenses[expense_id]
+    # update expense values
+    for key, value in updated_expense.items():
+        expense[key] = value
+    expenses[expense_id] = expense
+    return expense
