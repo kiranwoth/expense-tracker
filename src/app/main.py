@@ -41,6 +41,7 @@ async def create_expense(expense: schemas.ExpenseCreate):
     expenses[new_expense.id] = new_expense
     return new_expense
 
+
 @app.delete("/expenses/{expense_id}/")
 async def delete_expense(expense_id):
     if expense_id not in expenses:
