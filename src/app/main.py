@@ -42,8 +42,8 @@ async def create_expense(expense: schemas.ExpenseCreate):
     return new_expense
 
 
-@app.delete("/expenses/{expense_id}/")
-async def delete_expense(expense_id):
+@app.delete("/expenses/{expense_id}/", response_class=Response)
+async def delete_expense(expense_id: str):
     if expense_id not in expenses:
         raise HTTPException(status_code=404, detail="Expense not found")
     del expenses[expense_id]
