@@ -1,6 +1,6 @@
 from typing import Dict
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response, status
 
 from . import schemas
 
@@ -41,8 +41,9 @@ async def create_expense(expense: schemas.ExpenseCreate):
     expenses[new_expense.id] = new_expense
     return new_expense
 
-@app.delete("/expenses/{expense_id}/", response_model=schemas.Expense)
+@app.delete("/expenses/{expense_id}/")
 async def delete_expense(expense_id):
     if expense_id not in expenses:
         raise HTTPException(status_code=404, detail="Expense not found")
-    return expenses.pop(expense_id)
+    del expenses[expense_id]
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
