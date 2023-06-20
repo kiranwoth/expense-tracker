@@ -41,7 +41,7 @@ async def create_expense(expense: schemas.ExpenseCreate):
     expenses[new_expense.id] = new_expense
     return new_expense
 
-  
+
 @app.patch("/expenses/{expense_id}", response_model=schemas.Expense)
 async def update_expense(expense_id: str, expense_partial: schemas.ExpenseUpdate):
     # remove parts of expense that are None (not updated)
@@ -62,4 +62,3 @@ async def delete_expense(expense_id: str):
         raise HTTPException(status_code=404, detail="Expense not found")
     del expenses[expense_id]
     return Response(status_code=status.HTTP_204_NO_CONTENT)
-  
