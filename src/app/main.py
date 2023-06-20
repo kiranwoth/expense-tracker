@@ -40,3 +40,9 @@ async def create_expense(expense: schemas.ExpenseCreate):
     new_expense = schemas.Expense(**expense.dict())
     expenses[new_expense.id] = new_expense
     return new_expense
+
+@app.delete("/expenses/{expense_id}/", response_model=schemas.Expense)
+async def delete_expense(expense_id):
+    if expense_id not in expenses:
+        raise HTTPException(status_code=404, detail="Expense not found")
+    return expenses.pop(expense_id)
