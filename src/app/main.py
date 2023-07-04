@@ -28,7 +28,7 @@ async def read_expenses():
     return expenses
 
 
-@app.get("/expenses/{expense_id}/", response_model=schemas.Expense)
+@app.get("/expenses/{expense_id}", response_model=schemas.Expense)
 async def read_expense(expense_id: str):
     if expense_id not in expenses:
         raise HTTPException(status_code=404, detail="Expense not found")
@@ -56,7 +56,7 @@ async def update_expense(expense_id: str, expense_partial: schemas.ExpenseUpdate
     return expense
 
 
-@app.delete("/expenses/{expense_id}/", response_class=Response)
+@app.delete("/expenses/{expense_id}", response_class=Response)
 async def delete_expense(expense_id: str):
     if expense_id not in expenses:
         raise HTTPException(status_code=404, detail="Expense not found")
